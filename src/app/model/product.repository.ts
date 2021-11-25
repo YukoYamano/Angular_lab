@@ -5,7 +5,7 @@ import { StaticDataSource } from './static.datasource';
 @Injectable()
 export class ProductRepository {
   private products: Product[] = [];
-  private categories: string[] = [];
+  private categories: (string | undefined) []= [];
 
   constructor(private dataSource: StaticDataSource) 
   {
@@ -15,16 +15,16 @@ export class ProductRepository {
         .filter((c, index, array) => array.indexOf(c) === index).sort();
     });
   }
-  getProducts(category: string = null): Product[] {
+  getProducts(category: string ): Product[] {
     return this.products
       .filter(p => category == null || category === p.category);
   }
 
-  getProduct(id: number): Product {
+  getProduct(id: number): (Product | undefined) {
     return this.products.find(p => p.id === id);
   }
 
-  getCategories(): string[] {
+  getCategories(): (string | undefined)[] {
     return this.categories;
   }
 }
